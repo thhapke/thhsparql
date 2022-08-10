@@ -1,0 +1,8 @@
+---
+applications:
+- name: utils
+  host: utils
+  memory: 512M
+  disk_quota: 512M
+  timeout: 60
+  buildpack: https://github.com/cloudfoundry/buildpack-python.git

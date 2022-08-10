@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}thhsparql{% endblock %}
+
+{% block page_content %}
+
+<H2> SAP Data Intelligence</H2>
+    <form method="POST" action="" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+      <fieldset class="form-field">
+      Host/Tenant:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {{ form.di_host(size=70) }}
+          {{ form.di_tenant }}
+    </fieldset>
+    <BR>
+    <fieldset class="form-field">
+      User/Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {{ form.di_user }}
+          {{ form.di_pwd }}
+    </fieldset>
+    <BR>
+    <fieldset class="form-field">
+      Connection/Container:
+          {{ form.di_connection }}
+          {{ form.di_container }}
+         {{ form.submit_import_back }}
+         {{ form.submit_import_forward }}
+          {{ form.submit_import_new }}
+        {{ form.submit_import_add }}
+        Import to Repositories
+    </fieldset>
+
+    <br>
+    <H2>Files</H2>
+    <fieldset class="form-field">
+        {{ form.file_field_rdf.label }}
+        {{ form.file_field_rdf }}
+        <BR>
+        {{ form.submit_new }}
+        {{ form.submit_add }}
+        File to Repositories
+    </fieldset>
+    <BR>
+
+ <H2>Repositories</H2>
+<table class="table">
+<tbody>
+{%  for row in rdflist_body %}
+<tr>
+    <td>{{ row }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<HR size="30" color="black">
+    <fieldset class="form-field">
+        {{ form.submit_save }}
+        {{ form.submit_download }}
+        {{ form.submit_csn_json }}
+    </fieldset>
+    <BR>
+
+<HR>
+    <H2> SPARQL Command</H2>
+    <fieldset class="form-field">
+        {{ form.submit_use_query }}
+        {{ form.selected_query }}
+    </fieldset>
+    <BR>
+    <fieldset class="form-field">
+          {{ form.textarea_cmd(rows='8',cols='120') }}
+    </fieldset>
+        <fieldset class="form-field">
+          {{ form.submit_back }}
+          {{ form.submit_forward }}
+          {{ form.submit_save_query }}
+          {{ form.save_text(size=60) }}
+    </fieldset>
+    <BR>
+    <BR>
+    <fieldset class="form-field">
+          {{ form.submit_run }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      &nbsp;{{ form.check_use_namespaces.label }}
+          {{ form.check_use_namespaces }}
+          &nbsp;&nbsp;{{ form.check_unquote.label }}
+        {{ form.check_unquote }}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.submit_reasoning }}
+    </fieldset>
+</form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+                </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+<HR>
+    <B>Status: {{ status }}</B><BR>
+    <B>Number of results: {{ result_body|length }}</B>
+<table class="table">
+    <thead>
+        <tr>
+            {% for hi in result_header %}
+            <th scope="col">{{ hi }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+    <tbody>
+        {%  for row in result_body %}
+        <tr>
+            {%  for val in row %}
+                <td>{{ val }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

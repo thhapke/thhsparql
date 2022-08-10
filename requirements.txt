@@ -1,0 +1,12 @@
+Flask~=2.1.2
+Flask-Bootstrap
+Flask-Moment
+Flask-WTF
+jinja2
+wtforms~=3.0.1
+rdflib~=6.2.0a0
+pyparsing~=3.0.7
+tabulate~=0.8.9
+PyYAML~=6.0
+requests~=2.27.1
+owlrl
