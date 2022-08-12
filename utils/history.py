@@ -48,10 +48,14 @@ class History(list):
         return self._list[self.pointer]
 
     def last(self):
+        if self.pointer < 0:
+            return None
         self.pointer = len(self._list) - 1
         return self._list[self.pointer]
 
     def pointer_value(self):
+        if self.pointer < 0:
+            return None
         return self._list[self.pointer]
 
     def pointer_str(self):

@@ -2,6 +2,7 @@ import os
 from urllib.parse import urljoin
 import urllib
 import json
+import yaml
 
 import requests
 import logging
@@ -130,11 +131,13 @@ def export_catalog(host, tenant, path, user, password, connection_id, container)
 
 
 if __name__ == '__main__':
-    with open(os.path.join('../data/config.yaml')) as fp:
-        http_connection = json.load(fp)
-    host = http_connection['connectionProperties']['host']
-    tenant = http_connection['connectionProperties']['tenant']
-    path = http_connection['connectionProperties']['path']
-    user = http_connection['connectionProperties']['user']
-    password = http_connection['connectionProperties']['password']
-    export_catalog(host, tenant, path, user, password, connection_id='S4HANA', container='/TABLES')
+    with open(os.path.join('../data/config_collibra.yaml')) as fp:
+        config = yaml.safe_load(fp)
+    host = config['host']
+    tenant = config['tenant']
+    path = '/app/datahub-app-metadata/api/v1'
+    user = config['user']
+    password = config['password']
+    exported_data = export_catalog(host, tenant, path, user, password, connection_id='S4HANA', container='/TABLES')
+
+    print(json.dumps(exported_data, indent=4))
